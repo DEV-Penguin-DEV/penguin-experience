@@ -1,0 +1,139 @@
+@mixin scaleAnimation($el, $scaleTo, $duraction, $scaleFrom: 0, $delay: 0s) {
+  .block-animation {
+    &#{$el} {
+      scale: $scaleFrom;
+      will-change: scale;
+    }
+    &--active {
+      &#{$el} {
+        animation: scale $duraction $delay forwards ease-in-out;
+      }
+    }
+  }
+
+  @keyframes scale {
+    to {
+      scale: $scaleTo;
+    }
+  }
+}
+
+@mixin moveAnimation(
+  $el,
+  $duraction,
+  $distanse: 20vw,
+  $directionFrom: 'right',
+  $delay: 0s
+) {
+  .block-animation {
+    &#{$el} {
+      opacity: 0;
+      @if ($directionFrom == 'right') {
+        transform: translateX($distanse);
+      }
+      @if ($directionFrom == 'left') {
+        transform: translateX(calc(-1 * $distanse));
+      }
+      @if ($directionFrom == 'bottom') {
+        transform: translateY($distanse);
+      }
+      @if ($directionFrom == 'top') {
+        transform: translateY(calc(-1 * $distanse));
+      }
+      will-change: opacity, transform;
+    }
+
+    &--active {
+      &#{$el} {
+        animation: move $duraction $delay forwards ease-in-out;
+      }
+    }
+  }
+
+  @keyframes move {
+    to {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+}
+
+@mixin moveToAnimation($el, $duraction, $from: 0vw, $to: 100vw, $delay: 0s) {
+  .block-animation {
+    &#{$el} {
+      transform: translateX($from);
+      will-change: transform;
+    }
+
+    &--active {
+      &#{$el} {
+        animation: moveTo $duraction $delay forwards ease-in-out;
+      }
+    }
+  }
+
+  @keyframes moveTo {
+    to {
+      transform: translateX($to);
+    }
+  }
+}
+
+@mixin widthAnimation(
+  $el,
+  $duraction,
+  $widthFrom: 0vw,
+  $widthTo: 100vw,
+  $delay: 0s,
+  $modifier: ''
+) {
+  .block-animation {
+    &#{$el} {
+      width: $widthFrom;
+    }
+
+    &--active {
+      &#{$el} {
+        animation: width#{$modifier} $duraction $delay forwards ease-in-out;
+      }
+    }
+  }
+
+  @keyframes width#{$modifier} {
+    to {
+      width: $widthTo;
+    }
+  }
+}
+
+@mixin skewMoveAnimation(
+  $el,
+  $duraction,
+  $distance: 20vw,
+  $skewFrom: -30deg,
+  $skew50: 30deg,
+  $skewTo: 0deg,
+  $delay: 0s
+) {
+  .block-animation {
+    &#{$el} {
+      transform: translateX($distance * -1) skewX($skewFrom);
+      will-change: transform;
+    }
+
+    &--active {
+      &#{$el} {
+        animation: skewMove $duraction $delay forwards ease-in-out;
+      }
+    }
+  }
+
+  @keyframes skewMove {
+    50% {
+      transform: translateX($distance * 0.2) skewX($skew50);
+    }
+    to {
+      transform: translate(0, 0) skewX($skewTo);
+    }
+  }
+}
