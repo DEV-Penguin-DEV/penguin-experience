@@ -1,4 +1,4 @@
-import './animation.scss';
+import './animations.scss';
 
 const Visible = (target) => {
   // Все позиции элемента
