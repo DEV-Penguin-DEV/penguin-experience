@@ -1,9 +1,9 @@
-import './penguin-alerts.scss';
 import {
 	addModalStyle,
 	openModalWindow,
 	closeModalWindow,
-} from './penguin-modal.js';
+} from '../PENGUIN-Modal/penguin-modal';
+import './penguin-alerts.scss';
 
 const modalTemplate = (icon, titleText, text, buttonText) => `
 <div class="custom-modal c-modal">

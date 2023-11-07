@@ -4,7 +4,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 98vw;
-  max-width: 512px;
+  max-width: 50vw;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
@@ -14,6 +14,14 @@
   color: #545454;
   align-items: center;
   z-index: 10000;
+
+  @media (max-width: 760px) {
+    max-width: 70vw;
+  }
+
+  @media (max-width: 500px) {
+    max-width: 85vw;
+  }
 }
 
 .custom-modal__title {
@@ -27,6 +35,7 @@
   text-align: center;
   text-transform: none;
   word-wrap: break-word;
+  line-height: 110%;
 }
 
 .custom-modal__text {

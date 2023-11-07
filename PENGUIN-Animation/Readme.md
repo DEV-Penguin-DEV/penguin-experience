@@ -26,3 +26,4 @@
 - moveToAnimation - `Анимация движение от точки до точки`
 - widthAnimation - `Анимация изменения ширины`
 - skewMoveAnimation - `Анимация изменения наклона`
+- opacityAnimation - `Анимация изменения opacity`

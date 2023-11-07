@@ -137,3 +137,23 @@
     }
   }
 }
+
+@mixin opacityAnimation($el, $duraction, $from: 0, $to: 1, $delay: 0s) {
+  .block-animation {
+    &#{$el} {
+      opacity: $from;
+      will-change: opacity;
+    }
+    &--active {
+      &#{$el} {
+        animation: opacity $duraction $delay forwards ease-in-out;
+      }
+    }
+  }
+
+  @keyframes opacity {
+    to {
+      opacity: $to;
+    }
+  }
+}
