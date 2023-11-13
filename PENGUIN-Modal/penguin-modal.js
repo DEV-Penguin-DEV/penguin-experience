@@ -66,6 +66,10 @@ export const openModalWindow = (modal, isMobile = false, isFirst = true) => {
 	}
 
 	const shadowElement = document.querySelector('.modal-window-shadow');
+	
+	if (!shadowElement) {
+		createShadow();
+	}
 
 	shadowElement.classList.add('active');
 
@@ -89,11 +93,15 @@ export const openModalWindow = (modal, isMobile = false, isFirst = true) => {
 	}
 };
 
-export const startModals = () => {
-	const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+const createShadow = () => {
 	const shadowElement = document.createElement('div');
 	shadowElement.classList.add('modal-window-shadow');
 	document.body.appendChild(shadowElement);
+}
+
+export const startModals = () => {
+	const isMobile = window.matchMedia('(max-width: 1024px)').matches;
+	createShadow();
 	
 	const modalsButtons = document.querySelectorAll('.c-modal__button');
 	if (modalsButtons.length <= 0) {
