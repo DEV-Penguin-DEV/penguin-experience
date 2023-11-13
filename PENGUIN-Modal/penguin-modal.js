@@ -66,11 +66,12 @@ export const openModalWindow = (modal, isMobile = false, isFirst = true) => {
 	}
 
 	const shadowElement = document.querySelector('.modal-window-shadow');
-	
-	if (!shadowElement) {
+
+	if (!document.querySelector('.modal-window-shadow')) {
 		createShadow();
 	}
 
+	const shadowElement = document.querySelector('.modal-window-shadow');
 	shadowElement.classList.add('active');
 
 	function onWindowClick(evt) {
