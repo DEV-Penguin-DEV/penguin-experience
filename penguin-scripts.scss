@@ -12,18 +12,18 @@
   height: $height;
 }
 
-@mixin centering-pseudo-element() {
+@mixin centering-absolute-element() {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-@mixin centering-vertical-pseudo-element() {
+@mixin centering-vertical-absolute-element() {
   top: 50%;
   transform: translateY(-50%);
 }
 
-@mixin centering-horizontal-absolut-element() {
+@mixin centering-horizontal-absolute-element() {
   left: 50%;
   transform: translateX(-50%);
 }
