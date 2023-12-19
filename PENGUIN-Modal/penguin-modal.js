@@ -131,7 +131,7 @@ export const startModals = () => {
         closeModalWindow(oldModal);
       }
 
-      openModalWindow(modal, isMobile);
+      openModalWindow(modal, isMobile, modalButton.dataset.isFirst == 'false' ? false : true );
     });
   });
 };
