@@ -36,6 +36,7 @@ button[data-fancybox-close] {
   border: none;
   box-shadow: none;
   background: none;
+  z-index: 99999;
 
   @media (max-width: 500px) {
     top: 40px;
