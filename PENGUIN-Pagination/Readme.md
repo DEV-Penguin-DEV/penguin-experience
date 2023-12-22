@@ -14,7 +14,7 @@
 <div class="pagination">
     <button class="pagination__arrow pagination__arrow--left">
     </button>
-    <div class="pagination__container"> <!-- Контенер для номеров страниц --> </div>
+    <div class="pagination__container"> <!-- Контейнер для номеров страниц --> </div>
     <button class="pagination__arrow pagination__arrow--right">
     </button>
 </div>
@@ -29,4 +29,4 @@
  - paginationItems - `Класс элементов для которых создана пагинация`
  - leftButton - `Кнопка влево`
  - rightButton - `Кнопка вправо`
- - numberLinksContainer - `Контенер для номеров страниц`
+ - numberLinksContainer - `Контейнер для номеров страниц`
