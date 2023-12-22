@@ -1,3 +1,5 @@
+// `author` - DEV-Penguin-DEV[https://github.com/DEV-Penguin-DEV]
+
 /* eslint-disable no-undef */
 const elements = document.querySelectorAll('.clients__list');
 const GAP = 40;

@@ -1,5 +1,7 @@
 # PENGUIN Experience
 
+`author` - DEV-Penguin-DEV[https://github.com/DEV-Penguin-DEV]
+
 ### PENGUIN-Animation
 
 `Библиотека для анимации`
