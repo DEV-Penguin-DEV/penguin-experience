@@ -1,5 +1,4 @@
 const paginations = document.querySelectorAll('.gallery');
-const CARDS_PER_PAGE = 12;
 const NUMBER_LINK_TEMPLATE = (
   number,
   isActive = false
@@ -8,7 +7,7 @@ const NUMBER_LINK_TEMPLATE = (
 }"> ${number}
               </div>`;
 
-export const startPagination = () => {
+export const startPagination = (CARDS_PER_PAGE) => {
   paginations.forEach((pagination) => {
     const paginationItems = pagination.querySelectorAll('.gallery__item'); // Все элементы
     const pageCount = Math.ceil(paginationItems.length / CARDS_PER_PAGE); // Количество страниц
