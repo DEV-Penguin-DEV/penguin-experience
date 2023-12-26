@@ -3,12 +3,14 @@ export const startPhoneMask = () => {
   
     inputs.forEach((input) => {
       input.addEventListener('input', (event) => {
+        input.classList.remove('validated');
         const target = event.target;
         let value = target.value.replace(/\D/g, ''); // Удаляем все символы, кроме цифр
   
         if (value.length > 10) {
           // Ограничиваем длину номера телефона 10 символами
           value = value.slice(0, 11);
+          input.classList.add('validated');
         }
   
         let phone = '';
