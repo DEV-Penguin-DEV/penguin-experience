@@ -10,15 +10,15 @@ const NUMBER_LINK_TEMPLATE = (
 
 export const startPagination = (cardsPerPage) => {
 	CARDS_PER_PAGE = cardsPerPage;
-	paginations.forEach((pagination) => {
+	paginations.forEach((pagination, i) => {
 		const paginationItems = pagination.querySelectorAll('.gallery__item'); // Все элементы
 		const pageCount = Math.ceil(paginationItems.length / CARDS_PER_PAGE); // Количество страниц
 		let currentPage = pagination.dataset.currentPage; // Текущая страницы
-		const leftButton = document.querySelector('.pagination__arrow--left'); // Кнопка влево
-		const rightButton = document.querySelector('.pagination__arrow--right'); // Кнопка вправо
-		const numberLinksContainer = document.querySelector(
+		const leftButton = document.querySelectorAll('.pagination__arrow--left')[i]; // Кнопка влево
+		const rightButton = document.querySelectorAll('.pagination__arrow--right')[i]; // Кнопка вправо
+		const numberLinksContainer = document.querySelectorAll(
 			'.pagination__container'
-		); // Контейнер номеров страниц
+		)[i]; // Контейнер номеров страниц
 
 		// Добавляем номера страниц для пагинации
 		if (pageCount == 0) {
