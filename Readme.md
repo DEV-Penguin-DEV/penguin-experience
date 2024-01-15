@@ -57,7 +57,7 @@
 
 #### Инструкция к использованию
 
-1. В файле **animation.js** в функции startAnimation для функции addBaseAnimationClass передаём через запятую селеторы элементов которые будут отслеживаться для анимации и когда они будут находится полностью в поле зрение юзера будет добавляется класс **block-animation--active**
+1. В файле **animation.js** в функции startAnimation для функции addBaseAnimationClass передаём через запятую селекторы элементов которые будут отслеживаться для анимации и когда они будут находится полностью в поле зрение юзера будет добавляется класс **block-animation--active**
 2. Вызвать функцию **startAnimation** в основном js файле проекта
 
 #### Интерфейс
@@ -80,9 +80,9 @@
 
 ### settings.scss
 
-`Общие базовые стилди для каждого проекта`
+`Общие базовые стили для каждого проекта`
 
-### pegenguin-infinity-slider.js
+### penguin-infinity-slider.js
 
 `Бесконечный слайдер`
 
@@ -106,7 +106,7 @@
 <div class="pagination">
     <button class="pagination__arrow pagination__arrow--left">
     </button>
-    <div class="pagination__container"> <!-- Контенер для номеров страниц --> </div>
+    <div class="pagination__container"> <!-- Контейнер для номеров страниц --> </div>
     <button class="pagination__arrow pagination__arrow--right">
     </button>
 </div>
@@ -139,3 +139,7 @@
 2. Вызвать соответствующую функцию
 - startPhoneMask - `Маска для вводу телефона (+7)`
 
+
+### php-utils.php
+
+`Файл с полезными функциями для php`
