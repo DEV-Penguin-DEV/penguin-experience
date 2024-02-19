@@ -1,0 +1,67 @@
+// Texts
+$primary-text-color: #314d71;
+$special-text-color: #2a96c5;
+$secondary-text-color: #fff;
+$error-text-color: rgb(225, 68, 68);
+$mobile-menu-text-color: #e5ddc9;
+$menu-link-hover: #469cd1;
+
+// Backgrounds
+$primary-bg: #f6f4ec;
+$primary-dark-bg: #f3efde;
+$secondary-dark-bg: #ede6d6;
+$footer-bg: #314d71;
+$mobile-menu-bg: #182941;
+
+// Image
+$image-border-radius: 15px;
+
+// Buttons
+$button-border-color: #314d71;
+$button-border-width: 2px;
+// - Primary
+$primary-button-bg: #2a96c5;
+$primary-button-text-color: #fff;
+$primary-button-border-radius: 20px;
+// - Secondary
+$secondary-button-bg: #f3efde;
+$secondary-button-text-color: #314d71;
+$secondary-button-hover-color: #2a96c5;
+// - Dark
+$dark-button-bg: #314d71;
+$dark-button-border-radius: 15px;
+
+// Borders
+$primary-border-radius: 20px;
+$primary-border-color: #e5ddc9;
+$footer-border-color: #469cd1;
+$dark-border-color: #e2d9c2;
+$secondary-border-color: #314d71;
+$error-border-color: rgb(225, 68, 68);
+
+// Inputs
+$input-bg-color: #fff;
+$input-border-radius: 15px;
+$input-placeholder-color: #bfbfbf;
+
+// Transitions
+$fast-transition: 0.5s;
+$normal-transition: 0.75s;
+$long-transition: 1.25s;
+
+// Breakpoints
+// WIDTH
+$desktop-size: 1440px;
+$mini-desktop-size: 1280px;
+$big-laptop-size: 1130px;
+$laptop-size: 1000px;
+$big-tablet-size: 900px;
+$tablet-size: 760px;
+$mini-tablet-size: 620px;
+$big-phone-size: 500px;
+$phone-size: 440px;
+
+// HEIGHT
+$big-laptop-height: 780px;
+$laptop-height: 720px;
+$small-laptop-height: 650px;
