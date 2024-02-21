@@ -54,7 +54,17 @@ export const openModalWindow = (modal, isMobile = false, isFirst = true) => {
       : 'translate(-50%, -50%) scale(1)';
   document.querySelector('body').style.overflowY = 'hidden';
 
-  const modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
+  let modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
+
+  if (modalCloseButtons.length <= 0) {
+    const closeModalButton = document.createElement('button');
+    closeModalButton.setAttribute('data-fancybox-close', '');
+    closeModalButton.setAttribute('type', 'button');
+    closeModalButton.innerHTML =
+      '<span class="visually-hidden">Кнопка закрытия модального окна</span>';
+    modal.appendChild(closeModalButton);
+    modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
+  }
 
   modalCloseButtons.forEach((modalCloseButton) => {
     modalCloseButton.addEventListener('click', closeModal);
@@ -122,7 +132,12 @@ export const startModals = () => {
       closeModalButton.innerHTML =
         '<span class="visually-hidden">Кнопка закрытия модального окна</span>';
       modal.appendChild(closeModalButton);
+      modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
     }
+  
+    modalCloseButtons.forEach((modalCloseButton) => {
+      modalCloseButton.addEventListener('click', closeModal);
+    });
 
     modalButton.addEventListener('click', (evt) => {
       evt.preventDefault();
