@@ -7,6 +7,8 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 module.exports = {
   // Указываем точки входа для разных файлов
   entry: {
+    main: './src/js/main.js',
+    index: './src/js/pages/index.js',
   },
   output: {
     path: path.resolve(__dirname, './dist'),
