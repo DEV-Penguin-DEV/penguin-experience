@@ -62,3 +62,7 @@
     border-top: $height solid $color;
   }
 }
+
+@mixin grid-template-columns($count, $gap: 0) {
+  grid-template-columns: repeat($count, calc((100% - gap * ($count - 1)) / $count));
+}

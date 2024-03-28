@@ -1,37 +1,4 @@
-@mixin wrapper($padding, $width: 100vw, $max-width: 100vw) {
-  padding: 0 $padding;
-  width: calc($width - ($padding * 2));
-  margin: 0 auto;
-  max-width: calc($max-width - ($padding * 2));
-}
-
-@mixin margin-bottom($margin) {
-  margin: 0;
-  margin-bottom: $margin;
-}
-
-@mixin default-pseudo-element($width, $height: $width) {
-  content: '';
-  position: absolute;
-  width: $width;
-  height: $height;
-}
-
-@mixin centering-pseudo-element() {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@mixin centering-vertical-pseudo-element() {
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-@mixin centering-horizontal-absolut-element() {
-  left: 50%;
-  transform: translateX(-50%);
-}
+// `author` - DEV-Penguin-DEV[https://github.com/DEV-Penguin-DEV]
 
 @mixin wrapper($padding, $width: 100vw, $max-width: 100vw) {
   padding: 0 $padding;
@@ -47,18 +14,18 @@
   height: $height;
 }
 
-@mixin centering-pseudo-element() {
+@mixin centering-absolute-element() {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-@mixin centering-vertical-pseudo-element() {
+@mixin centering-vertical-absolute-element() {
   top: 50%;
   transform: translateY(-50%);
 }
 
-@mixin centering-horizontal-absolut-element() {
+@mixin centering-horizontal-absolute-element() {
   left: 50%;
   transform: translateX(-50%);
 }
@@ -96,55 +63,6 @@
   }
 }
 
-
-@mixin hover {
-  @media (any-hover: hover) {
-    &:hover {
-      @content;
-    }
-  }
-}
-
-@mixin aspect-ratio($width, $height) {
-  position: relative;
-  display: block;
-  width: 100%;
-
-  &::before {
-    display: block;
-    float: left;
-    width: 100%;
-    padding-top: calc(100% * #{$height} / #{$width});
-    content: '';
-  }
-
-  &::after {
-    display: block;
-    clear: both;
-    content: '';
-  }
-}
-
-@mixin section-paddings-top {
-  padding-top: 100px;
-
-  @media (max-width: $laptop-size) {
-    padding-top: 80px;
-  }
-
-  @media (max-width: $tablet-size) {
-    padding-top: 54px;
-  }
-}
-
-@mixin section-paddings-bottom {
-  padding-bottom: 100px;
-
-  @media (max-width: $laptop-size) {
-    padding-bottom: 80px;
-  }
-
-  @media (max-width: $tablet-size) {
-    padding-bottom: 54px;
-  }
+@mixin grid-template-columns($count, $gap: 0) {
+  grid-template-columns: repeat($count, calc((100% - gap * ($count - 1)) / $count));
 }
