@@ -63,6 +63,6 @@
   }
 }
 
-@mixin grid-template-columns($count, $gap: 0) {
-  grid-template-columns: repeat($count, calc((100% - gap * ($count - 1)) / $count));
+@mixin grid-template-columns($width: 100%, $count, $gap: 0) {
+  grid-template-columns: repeat($count, calc(($width - $gap * ($count - 1)) / $count));
 }
