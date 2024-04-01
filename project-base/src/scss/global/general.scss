@@ -1,8 +1,16 @@
-button {
+button, input {
   border: none;
   background: none;
   padding: 0;
+  box-sizing: border-box;
+}
+
+button {
   cursor: pointer;
+}
+
+fieldset {
+  border: none;
 }
 
 ul {

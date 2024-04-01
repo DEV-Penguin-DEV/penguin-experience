@@ -1,9 +1,18 @@
 // `author` - DEV-Penguin-DEV[https://github.com/DEV-Penguin-DEV]
 
-button {
+button, input {
   border: none;
   background: none;
   padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
+fieldset {
+  border: none;
 }
 
 ul {
@@ -29,3 +38,4 @@ a {
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
+
