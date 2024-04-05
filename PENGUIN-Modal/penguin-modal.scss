@@ -17,11 +17,14 @@
   padding: 91px 15px;
   max-width: 800px;
   width: 100%;
-  display: none;
+  display: block;
+  position: fixed;
+  will-change: transform;
   transform: scale(0);
   background: #100f0f;
   max-height: 100vh;
   overflow-y: scroll;
+  transition: 0.5s;
   overflow-x: hidden;
 }
 button[data-fancybox-close] {

@@ -1,152 +1,148 @@
 import './penguin-modal.scss';
+import { PenguinModalConstants } from './constants';
+import { get, getAll } from '../penguin-utils';
 
+let isBodyClickListenerAdded = false;
+
+/** 
+ * Закрывает модальное окно, удаляя активный класс и применяя анимацию уменьшения.
+ * @param {HTMLElement} modal - Элемент модального окна, которое необходимо закрыть.
+ */
 export const closeModalWindow = (modal) => {
-  modal.classList.remove('active');
-  modal.style.transform = 'translate(-50%, -50%) scale(0)';
-  window.setTimeout(() => (modal.style.zIndex = '-10000'), 500);
-  if (modal.classList.contains('custom-modal')) {
-    modal.remove();
-  }
+	modal.classList.remove('active');
+	modal.style.transform = 'translate(-50%, -50%) scale(0)';
+	window.setTimeout(() => (modal.style.zIndex = '-10000'), PenguinModalConstants.MODAL_TRANSITION);
 };
 
-export const closeModalWindowShadow = (modal) => {
-  closeModalWindow(modal);
-  const shadowDomElement = document.querySelector('.modal-window-shadow');
-  if (shadowDomElement) {
-    shadowDomElement.classList.remove('active');
-  }
-  document.querySelector('body').style.height = '';
-  document.querySelector('body').style.overflowY = '';
+/** 
+ * Закрывает все активные модальные окна и снимает блокировку прокрутки на теле документа.
+ */
+export const closeModalWindowShadow = () => {
+	getAll(`.c-modal.${PenguinModalConstants.MODAL_ACTIVE_CLASS}`).forEach(closeModalWindow);
+	const shadowDomElement = get(PenguinModalConstants.MODAL_SHADOW_CLASS);
+	if (shadowDomElement) shadowDomElement.classList.remove('active');
+	get('body').style.overflowY = '';
 };
 
-export const addModalStyle = (
-  modal,
-  animationDuration = 500,
-  isMobile = false
-) => {
-  modal.style = `
-      transition: ${animationDuration}ms;
-      display: block;
-      position: fixed;
-      will-change: transform;
-      `;
+/** 
+ * Добавляет стили к модальному окну для корректного отображения в зависимости от высоты содержимого и экрана.
+ * @param {HTMLElement} modal - Элемент модального окна для применения стилей.
+ * @param {boolean} isMobile - Флаг, указывающий на мобильное устройство, для специфической стилизации.
+ * @param {number} scale - Контролирует показ окна.
+ */
+export const addModalStyle = (modal, isMobile = false, scale = 0) => {
+	const viewportHeight = window.innerHeight;
+	const modalHeight = modal.getBoundingClientRect().height;
+	const style = isMobile && modalHeight > viewportHeight ? '0' : '50%';
 
-  const viewportHeight = window.innerHeight;
-  const modalHeight = modal.getBoundingClientRect().height;
-
-  modal.style.top = isMobile && modalHeight > viewportHeight ? '0' : '50%';
-  modal.style.left = '50%';
-  modal.style.transform = isMobile
-    ? 'translateX(-50%) scale(0)'
-    : 'translate(-50%, -50%) scale(0)';
+	Object.assign(modal.style, {
+		top: style,
+		left: '50%',
+		transform: `translateX(-50%) scale(${scale}) translateY(${style === '0' ? '0' : '-50%'})`
+	});
 };
 
+/** 
+ * Открывает модальное окно, добавляя активный класс, применяя стили и блокируя прокрутку тела документа.
+ * @param {HTMLElement} modal - Элемент модального окна.
+ * @param {boolean} isMobile - Флаг, указывающий на мобильное устройство, для специфической стилизации.
+ * @param {boolean} isFirst - Флаг, указывающий, является ли это первым открытием модального окна, для добавления обработчика клика.
+ */
 export const openModalWindow = (modal, isMobile = false, isFirst = true) => {
-  modal.classList.add('active');
-  modal.style.zIndex = '10000';
+	modal.classList.add(PenguinModalConstants.MODAL_ACTIVE_CLASS);
+	modal.style.zIndex = '10000';
 
-  const viewportHeight = window.innerHeight;
-  const modalHeight = modal.getBoundingClientRect().height;
+	addModalStyle(modal, isMobile, 1);
+	get('body').style.overflowY = 'hidden';
+	prepareModalCloseButton(modal);
 
-  modal.style.transform =
-    isMobile && modalHeight > viewportHeight
-      ? 'translateX(-50%) scale(1)'
-      : 'translate(-50%, -50%) scale(1)';
-  document.querySelector('body').style.overflowY = 'hidden';
-
-  let modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
-
-  if (modalCloseButtons.length <= 0) {
-    const closeModalButton = document.createElement('button');
-    closeModalButton.setAttribute('data-fancybox-close', '');
-    closeModalButton.setAttribute('type', 'button');
-    closeModalButton.innerHTML =
-      '<span class="visually-hidden">Кнопка закрытия модального окна</span>';
-    modal.appendChild(closeModalButton);
-    modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
-  }
-
-  modalCloseButtons.forEach((modalCloseButton) => {
-    modalCloseButton.addEventListener('click', closeModal);
-  });
-
-  if (isFirst) {
-    window.setTimeout(
-      () => document.body.addEventListener('click', onWindowClick),
-      500
-    );
-  }
-
-  if (!document.querySelector('.modal-window-shadow')) {
-    createShadow();
-  }
-
-  const shadowElement = document.querySelector('.modal-window-shadow');
-  shadowElement.classList.add('active');
-
-  function onWindowClick(evt) {
-    if (!evt.target.closest('.c-modal')) {
-      closeModal();
-    }
-  }
-
-  function closeModal() {
-    const activeModals = document.querySelectorAll('.c-modal.active');
-
-    activeModals.forEach((modalEl) => {
-      closeModalWindowShadow(modalEl);
-    });
-
-    modalCloseButtons.forEach((modalCloseButton) => {
-      modalCloseButton.removeEventListener('click', closeModal);
-    });
-    document.body.removeEventListener('click', onWindowClick);
-  }
+	if (isFirst) window.setTimeout(addBodyClickListener, PenguinModalConstants.MODAL_TRANSITION);
+	prepareShadow();
 };
 
-const createShadow = () => {
-  const shadowElement = document.createElement('div');
-  shadowElement.classList.add('modal-window-shadow');
-  document.body.appendChild(shadowElement);
-};
-
+/** 
+ * Инициализирует модальные окна, создавая теневой элемент и назначая обработчики для кнопок открытия модалок.
+ */
 export const startModals = () => {
-  const isMobile = window.matchMedia('(max-width: 1024px)').matches;
-  createShadow();
+	createShadow();
 
-  const modalsButtons = document.querySelectorAll('.c-modal__button');
-  if (modalsButtons.length <= 0) {
-    return;
-  }
-
-  modalsButtons.forEach((modalButton) => {
-    const modal = document.querySelector(modalButton.dataset.src);
-    addModalStyle(modal, 500, isMobile);
-
-    const modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
-
-    if (modalCloseButtons.length <= 0) {
-      const closeModalButton = document.createElement('button');
-      closeModalButton.setAttribute('data-fancybox-close', '');
-      closeModalButton.setAttribute('type', 'button');
-      closeModalButton.innerHTML =
-        '<span class="visually-hidden">Кнопка закрытия модального окна</span>';
-      modal.appendChild(closeModalButton);
-      modalCloseButtons = modal.querySelectorAll('[data-fancybox-close]');
-    }
-  
-    modalCloseButtons.forEach((modalCloseButton) => {
-      modalCloseButton.addEventListener('click', closeModal);
-    });
-
-    modalButton.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      const oldModal = document.querySelector('.c-modal.active');
-      if (oldModal) {
-        closeModalWindow(oldModal);
-      }
-
-      openModalWindow(modal, isMobile, modalButton.dataset.isFirst == 'false' ? false : true );
-    });
-  });
+	getAll(PenguinModalConstants.MODAL_OPEN_BUTTON_SELECTOR).forEach(modalButton => {
+		const modal = get(modalButton.dataset.src);
+		addModalStyle(modal, PenguinModalConstants.IS_MOBILE);
+		prepareModalCloseButton(modal);
+		modalButton.addEventListener('click', evt => onModalOpenButtonClick(evt, modal, modalButton));
+	});
 };
+
+/** Создает теневой элемент для фона при открытии модальных окон. */
+function createShadow() {
+	const shadowElement = document.createElement('div');
+	shadowElement.classList.add('modal-window-shadow');
+	document.body.appendChild(shadowElement);
+}
+
+/** Создает кнопку закрытия внутри модального окна. 
+ * @param {HTMLElement} modal - Элемент модального окна. */
+function createModalCloseButton(modal) {
+	const closeModalButton = document.createElement('button');
+	closeModalButton.setAttribute(PenguinModalConstants.CLOSE_BUTTON_ATTRIBUTE, '');
+	closeModalButton.setAttribute('type', 'button');
+	closeModalButton.innerHTML = PenguinModalConstants.DEFAULT_CLOSE_BUTTON_TEMPLATE;
+	modal.appendChild(closeModalButton);
+}
+
+/** 
+ * Обрабатывает клик по кнопке открытия модального окна, открывая соответствующее модальное окно.
+ * @param {Event} evt - Событие клика, используется для предотвращения стандартного действия браузера.
+ * @param {HTMLElement} modal - Элемент модального окна, которое будет открыто.
+ * @param {HTMLElement} modalButton - Кнопка, по которой произошел клик для открытия модального окна. Используется для получения дополнительных данных, например, состояния 'isFirst'.
+ */
+function onModalOpenButtonClick(evt, modal, modalButton) {
+	evt.preventDefault(); // Предотвращает стандартное действие для ссылок или кнопок, если таковое имеется.
+
+	const oldModal = get(`.c-modal.${PenguinModalConstants.MODAL_ACTIVE_CLASS}`); // Ищет активное модальное окно для его закрытия перед открытием нового.
+	if (oldModal) closeModalWindow(oldModal);
+
+	openModalWindow(modal, PenguinModalConstants.IS_MOBILE, modalButton.dataset.isFirst == 'false' ? false : true); // Открывает новое модальное окно с учетом параметров.
+}
+
+/** Подготавливает кнопки закрытия внутри модального окна, добавляя обработчики событий. 
+ * @param {HTMLElement} modal - Элемент модального окна. */
+function prepareModalCloseButton(modal) {
+	let modalCloseButtons = getAll(PenguinModalConstants.CLOSE_BUTTON_SELECTOR, modal);
+	if (modalCloseButtons.length <= 0) {
+		createModalCloseButton(modal);
+		modalCloseButtons = getAll(PenguinModalConstants.CLOSE_BUTTON_SELECTOR, modal);
+	}
+	modalCloseButtons.forEach(modalCloseButton => modalCloseButton.addEventListener('click', closeModalWindowShadow));
+}
+
+/** Подготавливает или создает элемент c тенью для модальных окон, если он еще не создан. */
+function prepareShadow() {
+	let shadowElement = get(PenguinModalConstants.MODAL_SHADOW_CLASS);
+
+	if (!shadowElement) {
+		createShadow();
+		shadowElement = get(PenguinModalConstants.MODAL_SHADOW_CLASS);
+	}
+
+	shadowElement.classList.add('active');
+}
+
+/** 
+ * Добавляет обработчик события на клик для Body для закрытия модального окна.
+ */
+function addBodyClickListener() {
+	if (!isBodyClickListenerAdded) {
+		document.body.addEventListener('click', onWindowClick);
+		isBodyClickListenerAdded = true;
+	}
+}
+
+/** 
+ * Закрывает модальное окно при клике вне модального окна.
+ */
+function onWindowClick(evt) {
+	const target = evt.target;
+	if (!target.closest('.c-modal') && !target.closest('.c-modal__button')) closeModalWindowShadow();
+}
