@@ -7,4 +7,5 @@ export const PenguinModalConstants = {
 	MODAL_TRANSITION: 500,
 	MODAL_ACTIVE_CLASS: 'active',
 	MODAL_SHADOW_CLASS: '.modal-window-shadow',
+	MODAL_CLASS: '.c-modal',
 };

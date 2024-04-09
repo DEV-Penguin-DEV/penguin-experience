@@ -66,10 +66,13 @@ export const openModalWindow = (modal, isMobile = false, isFirst = true) => {
 export const startModals = () => {
 	createShadow();
 
-	getAll(PenguinModalConstants.MODAL_OPEN_BUTTON_SELECTOR).forEach(modalButton => {
-		const modal = get(modalButton.dataset.src);
+	getAll(PenguinModalConstants.MODAL_CLASS).forEach((modal) => {
 		addModalStyle(modal, PenguinModalConstants.IS_MOBILE);
 		prepareModalCloseButton(modal);
+	});
+
+	getAll(PenguinModalConstants.MODAL_OPEN_BUTTON_SELECTOR).forEach(modalButton => {
+		const modal = get(modalButton.dataset.src);
 		modalButton.addEventListener('click', evt => onModalOpenButtonClick(evt, modal, modalButton));
 	});
 };

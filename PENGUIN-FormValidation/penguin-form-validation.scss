@@ -1,0 +1,23 @@
+.error-text {
+  // opacity: 0;
+  pointer-events: none;
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.75s;
+  padding-left: 20px;
+  color: rgba(120, 120, 120, 1);
+  font-size: clamp(12px, 0.83vw, 18px);
+}
+
+.error {
+  .error-text {
+    pointer-events: all;
+    max-height: 100px;
+    transition: 0.75s;
+    margin-top: 10px;
+  }
+
+  input {
+    color: rgba(153, 0, 0, 1) !important;
+  }
+}
