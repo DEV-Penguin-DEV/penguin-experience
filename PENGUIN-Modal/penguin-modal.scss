@@ -28,7 +28,7 @@
   position: fixed;
   will-change: transform;
   transform: scale(0);
-  background: #100f0f;
+  background: rgba(210, 212, 213, 1);
   max-height: 100vh;
   overflow-y: scroll;
   transition: 0.5s;
@@ -61,7 +61,7 @@ button[data-fancybox-close] {
     display: block;
     width: 36px;
     height: 3.5px;
-    background: rgb(97, 97, 97);
+    background: #c2c5c6;
     top: 50%;
     left: 50%;
     transition: 0.35s;

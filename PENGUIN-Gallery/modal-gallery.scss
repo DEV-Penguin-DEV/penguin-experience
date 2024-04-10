@@ -1,0 +1,42 @@
+.penguin-gallery-modal {
+  max-width: 80vw !important;
+  padding: 50px 15px !important;
+  background: transparent !important;
+
+  @media(max-width: 660px) {
+    max-width: 100vw !important;
+  }
+
+  @media(max-width: 430px) {
+    max-width: 100vw !important;
+    padding: 50px 5px !important;
+  }
+
+  .swiper-button-prev {
+    &::after, &::before {
+      content: none !important;
+    }
+  }
+
+  .swiper-button-next {
+    &::after, &::before {
+      content: none !important;
+    }
+  }
+
+  .review {
+    height: 80vh !important;
+  }
+}
+
+.penguin-gallery-modal__content {
+  max-width: 630px;
+  width: 80%;
+  height: 70vh;
+  @media(max-width: 430px) {
+    width: 90%;
+  }
+  .thanks-letter__img {
+    flex-grow: 1;
+  }
+}

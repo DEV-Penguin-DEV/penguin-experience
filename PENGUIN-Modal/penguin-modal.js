@@ -2,8 +2,6 @@ import './penguin-modal.scss';
 import { PenguinModalConstants } from './constants';
 import { get, getAll } from '../penguin-utils';
 
-let isBodyClickListenerAdded = false;
-
 /** 
  * Закрывает модальное окно, удаляя активный класс и применяя анимацию уменьшения.
  * @param {HTMLElement} modal - Элемент модального окна, которое необходимо закрыть.
@@ -21,7 +19,8 @@ export const closeModalWindowShadow = () => {
 	getAll(`.c-modal.${PenguinModalConstants.MODAL_ACTIVE_CLASS}`).forEach(closeModalWindow);
 	const shadowDomElement = get(PenguinModalConstants.MODAL_SHADOW_CLASS);
 	if (shadowDomElement) shadowDomElement.classList.remove('active');
-	get('body').style.overflowY = '';
+	get('html').style.overflowY = '';
+	document.body.removeEventListener('click', onWindowClick);
 };
 
 /** 
@@ -49,11 +48,13 @@ export const addModalStyle = (modal, isMobile = false, scale = 0) => {
  * @param {boolean} isFirst - Флаг, указывающий, является ли это первым открытием модального окна, для добавления обработчика клика.
  */
 export const openModalWindow = (modal, isMobile = false, isFirst = true) => {
+	const prevModal = get('.c-modal.active');
+	if (isFirst && prevModal) closeModalWindow(prevModal);
 	modal.classList.add(PenguinModalConstants.MODAL_ACTIVE_CLASS);
 	modal.style.zIndex = '10000';
 
 	addModalStyle(modal, isMobile, 1);
-	get('body').style.overflowY = 'hidden';
+	get('html').style.overflowY = 'hidden';
 	prepareModalCloseButton(modal);
 
 	if (isFirst) window.setTimeout(addBodyClickListener, PenguinModalConstants.MODAL_TRANSITION);
@@ -136,10 +137,7 @@ function prepareShadow() {
  * Добавляет обработчик события на клик для Body для закрытия модального окна.
  */
 function addBodyClickListener() {
-	if (!isBodyClickListenerAdded) {
-		document.body.addEventListener('click', onWindowClick);
-		isBodyClickListenerAdded = true;
-	}
+	document.body.addEventListener('click', onWindowClick);
 }
 
 /** 
