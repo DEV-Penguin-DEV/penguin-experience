@@ -4,11 +4,13 @@ import { getAll, get } from '../penguin-utils';
 import { openModalWindow } from '../PENGUIN-Modal/penguin-modal';
 import { PenguinGalleryConstants } from './constants';
 
+let galleryModal;
+
 /**
  * Инициализирует галерею, добавляя обработчики событий на элементы галереи.
  */
 export const startGallery = () => {
-	const galleryModal = get(PenguinGalleryConstants.MODAL_CLASS);
+	galleryModal = get(PenguinGalleryConstants.MODAL_CLASS);
 	const galleries = getAll(PenguinGalleryConstants.GALLERY_CLASS);
   
 	galleries.forEach(gallery => {
@@ -18,9 +20,16 @@ export const startGallery = () => {
 			if (!target) return; // Если элемент не найден, выходим из функции
   
 			// Определяем индекс выбранного элемента
-			const index = [...gallery.children].indexOf(target);
+			let index;
+			const slides = getAll('.swiper-wrapper > li', gallery);
+			for (let i = 0; i < slides.length; i++) {
+				console.log(slides);
+				console.log(i);
+				index = slides[i].classList.contains('swiper-slide-active') ? i : -1;
+				if (index != -1) break;
+			}
 			// Настраиваем модальное окно галереи и открываем его
-			setupGalleryModal(gallery, galleryModal, index);
+			setupGalleryModal(gallery, index);
 			openModalWindow(galleryModal);
 		});
 	});
@@ -32,11 +41,15 @@ export const startGallery = () => {
  * @param {HTMLElement} galleryModal - Модальное окно для вставки галерее.
  * @param {number} initialSlide - Индекс начального слайда для отображения.
  */
-function setupGalleryModal(gallery, galleryModal, initialSlide) {
-	const galleryModalContent = get(PenguinGalleryConstants.MODAL_CONTENT_CLASS, galleryModal);
+function setupGalleryModal(gallery, initialSlide) {
+	const currentGalleryModal = get(PenguinGalleryConstants.MODAL_CLASS);
+	currentGalleryModal.innerHTML = galleryModal.innerHTML;
+	const galleryModalContent = get(PenguinGalleryConstants.MODAL_CONTENT_CLASS, currentGalleryModal);
+	console.log(get(PenguinGalleryConstants.SWIPER_WRAPPER_CLASS, gallery));
 	galleryModalContent.innerHTML = get(PenguinGalleryConstants.SWIPER_WRAPPER_CLASS, gallery)?.outerHTML ?? ''; // Используем опциональную цепочку и логическое присваивание
   
 	// Инициализируем Swiper с настройками
+	console.log(initialSlide);
 	new Swiper(galleryModalContent, getSwiperOptions(initialSlide));
 }
 
