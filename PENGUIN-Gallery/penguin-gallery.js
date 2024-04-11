@@ -23,8 +23,6 @@ export const startGallery = () => {
 			let index;
 			const slides = getAll('.swiper-wrapper > li', gallery);
 			for (let i = 0; i < slides.length; i++) {
-				console.log(slides);
-				console.log(i);
 				index = slides[i].classList.contains('swiper-slide-active') ? i : -1;
 				if (index != -1) break;
 			}
@@ -45,11 +43,9 @@ function setupGalleryModal(gallery, initialSlide) {
 	const currentGalleryModal = get(PenguinGalleryConstants.MODAL_CLASS);
 	currentGalleryModal.innerHTML = galleryModal.innerHTML;
 	const galleryModalContent = get(PenguinGalleryConstants.MODAL_CONTENT_CLASS, currentGalleryModal);
-	console.log(get(PenguinGalleryConstants.SWIPER_WRAPPER_CLASS, gallery));
 	galleryModalContent.innerHTML = get(PenguinGalleryConstants.SWIPER_WRAPPER_CLASS, gallery)?.outerHTML ?? ''; // Используем опциональную цепочку и логическое присваивание
   
 	// Инициализируем Swiper с настройками
-	console.log(initialSlide);
 	new Swiper(galleryModalContent, getSwiperOptions(initialSlide));
 }
 
