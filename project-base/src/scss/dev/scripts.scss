@@ -41,25 +41,31 @@
   height: 0;
   background: none;
 
-  @if $direction == 'up' or $direction == 'down' {
-    border-left: calc($width / 2) $border-type transparent;
-    border-right: calc($width / 2) $border-type transparent;
-  } @else {
-    border-top: calc($width / 2) $border-type transparent;
-    border-bottom: calc($width / 2) $border-type transparent;
-  }
+  $first-border: calc($width / 2) $border-type transparent;
+  $second-border: $height $border-type $border-color;
 
-  @if $direction == 'up' {
-    border-bottom: $height $border-type $border-color;
-  } @else if $direction == 'left' {
-    border-right: $height $border-type $border-color;
-  } @else if $direction == 'right' {
-    border-left: $height $border-type $border-color;
+  @if $direction == 'up' or $direction == 'down' {
+    border-left: $first-border;
+    border-right: $first-border;
   } @else {
-    border-top: $height $border-type $border-color;
+    border-top: $first-border;
+    border-bottom: $first-border;
+  }
+  
+  @if $direction == 'up' {
+    border-bottom: $second-border;
+  } @else if $direction == 'left' {
+    border-right: $second-border;
+  } @else if $direction == 'right' {
+    border-left: $second-border;
+  } @else {
+    border-top: $second-border;
   }
 }
 
 @mixin grid-template-columns($count, $width: 100%, $gap: 0px) {
-  grid-template-columns: repeat($count, calc(($width - $gap * ($count - 1)) / $count));
+  grid-template-columns: repeat(
+    $count,
+    calc(($width - $gap * ($count - 1)) / $count)
+  );
 }
